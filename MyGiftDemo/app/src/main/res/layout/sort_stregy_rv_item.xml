@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+<ImageView
+    android:id="@+id/sort_strtegy_item_contentimage"
+    android:src="@mipmap/ic_launcher"
+    android:layout_width="150dp"
+    android:layout_height="80dp"
+    android:layout_marginLeft="5dp"/>
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_margin="5dp"
+        android:id="@+id/sort_strtegy_item_title"
+        android:text="懒人穿搭术"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+        <TextView
+
+            android:id="@+id/sort_strtegy_item_subtitle"
+            android:text="更新至第71期"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+
+            android:id="@+id/sort_strtegy_item_author"
+            android:text="宝宝"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,17 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="comnd.example.dllo.mygiftdemo.MainActivity">
 
-    <TextView
-        android:text="Hello World!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</RelativeLayout>
+   <!-- 首页下面那个rediogroup-->
+   <FrameLayout
+       android:id="@+id/my_main_lineralayout"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="1"></FrameLayout>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@android:color/black"></View>
+   
+   <RadioGroup
+       android:id="@+id/my_main_radioGroup"
+       android:orientation="horizontal"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+      <RadioButton
+          android:layout_marginTop="@dimen/activity_main_layout_marginTop"
+          android:drawableTop="@drawable/guidebtn_state"
+          android:button="@null"
+          android:checked="true"
+          android:layout_marginLeft="5dp"
+
+          android:text="@string/guide_text"
+          android:gravity="center"
+          android:textColor="@color/color_radiobutton"
+          android:id="@+id/my_main_guideRadio_Btn"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          />
+
+
+
+      <RadioButton
+          android:layout_marginTop="@dimen/activity_main_layout_marginTop"
+          android:checked="true"
+
+          android:gravity="center"
+          android:text="@string/hot_text"
+
+          android:textColor="@color/color_radiobutton"
+          android:drawableTop="@drawable/hotbtn_state"
+          android:button="@null"
+          android:id="@+id/my_main_hotRadio_Btn"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          />
+
+
+
+      <RadioButton
+          android:layout_marginTop="@dimen/activity_main_layout_marginTop"
+          android:checked="true"
+
+          android:gravity="center"
+          android:text="@string/classFiy_text"
+
+          android:textColor="@color/color_radiobutton"
+          android:drawableTop="@drawable/sort_state"
+          android:button="@null"
+          android:id="@+id/my_main_sortRadio_Btn"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          />
+
+
+      <RadioButton
+          android:layout_marginTop="@dimen/activity_main_layout_marginTop"
+          android:checked="true"
+
+          android:gravity="center"
+          android:text="@string/my_text"
+
+          android:textColor="@color/color_radiobutton"
+         android:drawableTop="@drawable/home_state"
+          android:button="@null"
+          android:id="@+id/my_main_homeRadio_Btn"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+         />
+
+
+   </RadioGroup>
+
+</LinearLayout>

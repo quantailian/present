@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="240dp"
+    android:orientation="vertical">
+    <!-- 第二个页面复用自定义listview布局-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:id="@+id/second_listview_TopTvOne"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/stort"
+            android:text="数码"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/second_listview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:text="数码家"
+            android:textSize="14sp" />
+
+        <!-- 圆头像-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/second_listview_touxiang"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="120dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/second_listview_tvname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="黑科技调查"
+            android:layout_margin="3dp"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/second_listview_contentImageView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@mipmap/icon_progress_bar_refresh" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/second_listview_content"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_alignParentStart="true"
+            android:layout_margin="5dp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="是打发第三方第三方士大夫收到" />
+        <!--限制字体不超出
+         android:singleLine="true"
+            android:ellipsize="end"
+
+        -->
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="2dp"
+
+            android:background="@drawable/heart" />
+
+        <TextView
+            android:id="@+id/second_listview_likesCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="212121" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

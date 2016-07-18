@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <!--app:tabMaxWidth="70dp" 最大长度-->
+<android.support.design.widget.TabLayout
+   app:tabMaxWidth="70dp"
+    android:background="#ff2d47"
+    android:id="@+id/my_sort_tablayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    
+</android.support.design.widget.TabLayout>
+
+<TextView
+    android:id="@+id/sort_tv"
+    android:layout_marginTop="10dp"
+    android:text="选礼神器"
+   android:textColor="@android:color/white"
+        android:layout_alignParentEnd="true"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/sort_btn"
+       android:layout_margin="5dp"
+        android:textColor="@android:color/darker_gray"
+        android:text= " 快选一份礼物,送给亲爱的Ta吧"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/my_sort_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </android.support.v4.view.ViewPager>
+</LinearLayout>

@@ -20,7 +20,16 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:design:23.0.1'
+    compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.youth.banner:banner:+'
+    compile 'com.android.support:recyclerview-v7:23.0.1'
+    compile 'co.roverlabs:picasso:2.5.2'
+    compile files('libs/universal-image-loader-1.9.5.jar')
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 }
