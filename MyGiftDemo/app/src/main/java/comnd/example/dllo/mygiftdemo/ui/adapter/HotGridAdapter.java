@@ -12,6 +12,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import comnd.example.dllo.mygiftdemo.R;
+import comnd.example.dllo.mygiftdemo.model.bean.HotBean;
 import comnd.example.dllo.mygiftdemo.model.bean.LocalhotBean;
 import comnd.example.dllo.mygiftdemo.model.net.SingleLoadingImageView;
 import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
@@ -22,26 +23,26 @@ import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
  */
 public class HotGridAdapter extends BaseAdapter{
 
-    private ArrayList<LocalhotBean> beans;
+    private HotBean beans;
     private Context context;
 
     public HotGridAdapter(Context context) {
         this.context = context;
     }
 
-    public void setBeans(ArrayList<LocalhotBean> beans) {
+    public void setBeans(HotBean beans) {
         this.beans = beans;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return beans!=null?beans.size():0;
+        return beans!=null?beans.getData().getItems().size():0;
     }
 
     @Override
     public Object getItem(int position) {
-        return beans.get(position);
+        return beans.getData().getItems().get(position);
     }
 
     @Override
@@ -62,13 +63,12 @@ public class HotGridAdapter extends BaseAdapter{
             holder = (HotGridHolder) convertView.getTag();
         }
 
-        // 获得
-        LocalhotBean data = beans.get(position);
+
 //        VolleyInstance.loadImageView(data.getImageUrl(),holder.imageContent,context);
-        SingleLoadingImageView.loadImageView(data.getImageUrl(),holder.imageContent,context);
-        holder.tvContent.setText(data.getName());
-        holder.tvPrice.setText(data.getPrice());
-        holder.likeCount.setText(data.getLikesCount());
+        SingleLoadingImageView.loadImageView(beans.getData().getItems().get(position).getData().getCover_image_url(),holder.imageContent,context);
+        holder.tvContent.setText(beans.getData().getItems().get(position).getData().getName());
+        holder.tvPrice.setText(beans.getData().getItems().get(position).getData().getPrice());
+        holder.likeCount.setText(String.valueOf(beans.getData().getItems().get(position).getData().getFavorites_count()));
         return convertView;
     }
 

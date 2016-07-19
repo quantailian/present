@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@android:color/white"
+
+    android:layout_gravity="bottom"
+    android:layout_height="200dp">
+
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <TextView
+                android:layout_margin="30dp"
+                android:text="微信"
+                android:textSize="10dp"
+                android:gravity="center"
+                android:drawableTop="@mipmap/ic_share_wechat"
+
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <TextView
+                android:layout_margin="30dp"
+                android:text="朋友圈"
+                android:textSize="10dp"
+                android:gravity="center"
+                android:drawableTop="@mipmap/ic_share_wechat_timeline"
+
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <TextView
+                android:layout_margin="30dp"
+                android:text="QQ"
+                android:textSize="10dp"
+                android:gravity="center"
+                android:drawableTop="@mipmap/ic_share_tencent_qq"
+
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+        </LinearLayout>
+        <LinearLayout
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <TextView
+                android:layout_margin="30dp"
+                android:text="微博"
+                android:textSize="10dp"
+                android:gravity="center"
+                android:drawableTop="@mipmap/ic_share_sina_weibo"
+
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <TextView
+                android:layout_margin="30dp"
+                android:text="Qzone"
+                android:textSize="10dp"
+                android:gravity="center"
+                android:drawableTop="@mipmap/ic_share_tencent_qzone"
+
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <TextView
+                android:layout_margin="30dp"
+                android:text="复制链接"
+                android:textSize="10dp"
+                android:gravity="center"
+                android:drawableTop="@mipmap/ic_share_hyperlink"
+
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+        </LinearLayout>
+    </LinearLayout>

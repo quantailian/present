@@ -16,6 +16,7 @@ import comnd.example.dllo.mygiftdemo.model.net.SingleLoadingImageView;
 
 /**
  * Created by dllo on 16/7/16.
+ * 单品页面左面滑动的listview的适配器
  */
 public class SortSingleLvAdapter extends BaseAdapter {
 

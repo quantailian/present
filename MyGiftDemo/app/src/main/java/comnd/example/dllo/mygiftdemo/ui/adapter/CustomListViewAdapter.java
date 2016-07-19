@@ -9,17 +9,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import comnd.example.dllo.mygiftdemo.R;
-import comnd.example.dllo.mygiftdemo.model.bean.LocalGuideFirstLvBean;
+
 import comnd.example.dllo.mygiftdemo.model.bean.MyCustomBean;
 import comnd.example.dllo.mygiftdemo.model.net.SingleLoadingImageView;
-import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
+
 
 /**
  * Created by dllo on 16/7/13.
@@ -27,7 +23,7 @@ import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
  */
 public class CustomListViewAdapter extends BaseAdapter {
 
-    private ArrayList<LocalGuideFirstLvBean> beans;
+    private MyCustomBean beans;
 
     private Context context;
 
@@ -35,19 +31,19 @@ public class CustomListViewAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setBeans(ArrayList<LocalGuideFirstLvBean> beans) {
+    public void setBeans(MyCustomBean beans) {
         this.beans = beans;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return beans!=null?beans.size():0;
+        return beans!=null?beans.getData().getItems().size():0;
     }
 
     @Override
     public Object getItem(int position) {
-        return beans.get(position);
+        return beans.getData().getItems().get(position);
     }
 
     @Override
@@ -68,14 +64,14 @@ public class CustomListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        LocalGuideFirstLvBean data = beans.get(position);
+
         // 毕加索
         //Picasso.with(context).load(data.getImageCenter()).into(holder.image_center);
 //        VolleyInstance.loadImageView(data.getImageCenter(),holder.image_center,context);
-        SingleLoadingImageView.loadImageView(data.getImageCenter(),holder.image_center,context);
-        holder.tv_title.setText(data.getTitle());
-        holder.tv_zan.setText(data.getLikeCount());
-        holder.tv_shortTitle.setText(data.getShort_msg());
+        SingleLoadingImageView.loadImageView(beans.getData().getItems().get(position).getCover_image_url(),holder.image_center,context);
+        holder.tv_title.setText(beans.getData().getItems().get(position).getTitle());
+        holder.tv_shortTitle.setText(beans.getData().getItems().get(position).getShort_title());
+        holder.tv_zan.setText(String.valueOf(beans.getData().getItems().get(position).getLikes_count()));
         return convertView;
 
 

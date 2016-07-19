@@ -25,6 +25,12 @@
 
 
         </activity>
+        <activity android:name=".ui.activity.SecondJumpActivity"/>
+        <activity android:name=".ui.activity.WebJumpActivity"/>
+        <activity android:name=".ui.activity.JumpBabyDetailsActivity"/>
+
+
+
     </application>
 
 </manifest>

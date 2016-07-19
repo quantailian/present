@@ -1,9 +1,12 @@
 package comnd.example.dllo.mygiftdemo.ui.fragment;
 
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -23,6 +26,9 @@ import comnd.example.dllo.mygiftdemo.model.bean.MyLunBoBean;
 import comnd.example.dllo.mygiftdemo.model.net.MyStrURL;
 import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
 import comnd.example.dllo.mygiftdemo.model.net.VolleyResult;
+import comnd.example.dllo.mygiftdemo.tools.MyCustomListView;
+import comnd.example.dllo.mygiftdemo.ui.activity.SecondJumpActivity;
+import comnd.example.dllo.mygiftdemo.ui.activity.WebJumpActivity;
 import comnd.example.dllo.mygiftdemo.ui.adapter.CustomListViewAdapter;
 import comnd.example.dllo.mygiftdemo.ui.adapter.MyFristItemAdapter;
 import comnd.example.dllo.mygiftdemo.ui.adapter.MyRVOnClickListener;
@@ -32,13 +38,17 @@ import comnd.example.dllo.mygiftdemo.ui.adapter.MyRVOnClickListener;
  * guide 的第一个fragment
  * 里面放了三个网络解析
  */
-public class FristFragment extends AbsBaseFragment implements VolleyResult, Banner.OnBannerClickListener, MyRVOnClickListener {
+public class FristFragment extends AbsBaseFragment implements VolleyResult, Banner.OnBannerClickListener, MyRVOnClickListener, AdapterView.OnItemClickListener {
     // banner 对象
     private Banner rollImgBanner;
     // 初始化banner接口
     private String bannerUrl = MyStrURL.MY_LUNBO;
     // 图片的URL
     private String[] imageUrls;
+    // 图片跳转的集合;
+    private String[] bannerJumpUrl ;
+    // 图片标题
+    private String[] title;
     // 滑动recycleview的接口
     private String itemUrl = MyStrURL.MY_FRIST_ITEM;
     // 首页listview接口
@@ -46,8 +56,9 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
     private Gson gson;
     private RecyclerView recyclerView;
     private int type;
-    private ArrayList<String> arrayList;
-    private ListView listView;
+
+    private MyCustomListView listView;
+    private MyCustomBean customBean;
 
 
     @Override
@@ -67,6 +78,7 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
 
         type = 0;
         VolleyInstance.getInstance(context).startRequest(bannerUrl, this);
+        listView.setOnItemClickListener(this);
 
 
     }
@@ -100,8 +112,14 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
                 List<MyLunBoBean.DataBean.BannersBean> bean = boBean.getData().getBanners();
                 //初始化数组 加入数据
                 imageUrls = new String[bean.size()];
+
+                bannerJumpUrl = new String[bean.size()];
+                title = new String[bean.size()];
                 for (int i = 0; i < bean.size(); i++) {
                     imageUrls[i] = bean.get(i).getImage_url();
+                    bannerJumpUrl[i] = "http://api.liwushuo.com/v2/collections/" +
+                            bean.get(i).getTarget_id() + "/posts?gender=1&generation=2&limit=20&offset=0";
+//
                 }
                 // 显示banner
                 showBanner();
@@ -112,17 +130,10 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
             case 1:
 
                 MyFristItemBean fristItemBean = gson.fromJson(str, MyFristItemBean.class);
-                List<MyFristItemBean.DataBean.SecondaryBannersBean> beans = fristItemBean.getData().getSecondary_banners();
-                arrayList = new ArrayList<>();
-                for (int i = 0; i < beans.size(); i++) {
-                    String url = beans.get(i).getImage_url();
-                    arrayList.add(url);
-
-                }
-                // 初始化适配器
+               // 初始化适配器
                 MyFristItemAdapter itemAdapter = new MyFristItemAdapter(context);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-                itemAdapter.setImageUrls(arrayList);
+                itemAdapter.setData(fristItemBean);
                 recyclerView.setAdapter(itemAdapter);
                 itemAdapter.setMyrvOnClickListener(this);
                 type = 2;
@@ -130,19 +141,11 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
                 break;
 
             case 2:
-                MyCustomBean customBean = gson.fromJson(str,MyCustomBean.class);
-                List<MyCustomBean.DataBean.ItemsBean> mybeans = customBean.getData().getItems();
-                ArrayList<LocalGuideFirstLvBean> localGuideFirstLvBeen = new ArrayList<>();
-                for (int i = 0; i < mybeans.size(); i++) {
-                    String imagurl = mybeans.get(i).getCover_image_url();
-                    String title = mybeans.get(i).getTitle();
-                    String likeCount = String.valueOf(mybeans.get(i).getLikes_count());
-                    String shortTitle = mybeans.get(i).getShort_title();
-                    localGuideFirstLvBeen.add(new LocalGuideFirstLvBean(imagurl,title,likeCount,shortTitle));
-                }
+                customBean = gson.fromJson(str,MyCustomBean.class);
+
                 //  初始化适配器
                 CustomListViewAdapter listViewAdapter = new CustomListViewAdapter(context);
-                listViewAdapter.setBeans(localGuideFirstLvBeen);
+                listViewAdapter.setBeans(customBean);
                 listView.setAdapter(listViewAdapter);
 
 
@@ -156,10 +159,20 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
         Toast.makeText(context, "获取失败", Toast.LENGTH_SHORT).show();
     }
 
-
+    /**
+     * 轮播图的点击事件
+     * @param view
+     * @param position
+     */
     @Override
     public void OnBannerClick(View view, int position) {
 
+      Bundle bundle = new Bundle();
+
+        // 传入一个网址 参数轮播图点击的位置
+        String url = bannerJumpUrl[position];
+        bundle.putString("url",url);
+        goTo(context, SecondJumpActivity.class,bundle);
         Toast.makeText(context, "我是轮播图的监听事件", Toast.LENGTH_SHORT).show();
     }
 
@@ -167,5 +180,13 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
     public void rvOnClickListener(int pos) {
 
         Toast.makeText(context, "我是RV的监听", Toast.LENGTH_SHORT).show();
+    }
+
+    // listview的监听方法中传值
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Bundle bundle = new Bundle();
+        bundle.putString("url",customBean.getData().getItems().get(position).getUrl());
+        goTo(context, WebJumpActivity.class,bundle);
     }
 }

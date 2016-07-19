@@ -74,6 +74,8 @@ public class GuideFragment extends AbsBaseFragment implements VolleyResult {
             }
         });
 
+        // viewpager预加载
+        viewpager.setOffscreenPageLimit(16);
 
         VolleyInstance.getInstance(getContext()).startRequest(url, this);
     }

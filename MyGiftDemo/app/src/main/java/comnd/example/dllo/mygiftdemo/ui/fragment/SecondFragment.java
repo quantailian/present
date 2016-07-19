@@ -1,17 +1,18 @@
 package comnd.example.dllo.mygiftdemo.ui.fragment;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 import comnd.example.dllo.mygiftdemo.R;
 
-import comnd.example.dllo.mygiftdemo.model.bean.FuyongBean;
+
 import comnd.example.dllo.mygiftdemo.model.bean.HTBean;
 
 
@@ -19,15 +20,17 @@ import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
 import comnd.example.dllo.mygiftdemo.model.net.VolleyResult;
 
 
+import comnd.example.dllo.mygiftdemo.ui.activity.WebJumpActivity;
 import comnd.example.dllo.mygiftdemo.ui.adapter.FuyongAdapter;
 
 /**
  * Created by dllo on 16/7/12.
  */
-public class SecondFragment extends AbsBaseFragment implements VolleyResult {
+public class SecondFragment extends AbsBaseFragment implements VolleyResult, AdapterView.OnItemClickListener {
 
     private ListView listView;
     private String url;
+    private HTBean htBean;
 
 
     @Override
@@ -47,6 +50,7 @@ public class SecondFragment extends AbsBaseFragment implements VolleyResult {
         this.url = bundle.getString("url");
         VolleyInstance.getInstance(context).startRequest(url, this);
 
+        listView.setOnItemClickListener(this);
 
     }
 
@@ -70,25 +74,10 @@ public class SecondFragment extends AbsBaseFragment implements VolleyResult {
     public void success(String str) {
         // 解析数据
         Gson gson = new Gson();
-        HTBean htBean = gson.fromJson(str, HTBean.class);
-        List<HTBean.DataBean.ItemsBean> data = htBean.getData().getItems();
-        ArrayList<FuyongBean> beans = new ArrayList<>();
-        for (int i = 0; i < data.size(); i++) {
-            String contentTitle = data.get(i).getTitle();
-            String coverImage = data.get(i).getCover_image_url();
-            String likeCount = String.valueOf(data.get(i).getLikes_count());
-            // items - author这一层
-            String touxiang = data.get(i).getAuthor().getAvatar_url();
-            String nickname = data.get(i).getAuthor().getNickname();
-            // items - column这一层
-            String category = data.get(i).getColumn().getCategory();
-            String listviewTitle = data.get(i).getColumn().getTitle();
-            beans.add(new FuyongBean(contentTitle, coverImage,
-                    likeCount, touxiang, nickname, category, listviewTitle));
-        }
+        htBean = gson.fromJson(str, HTBean.class);
 
         FuyongAdapter adapter = new FuyongAdapter(context);
-        adapter.setBeans(beans);
+        adapter.setBeans(htBean);
         listView.setAdapter(adapter);
 
     }
@@ -99,6 +88,13 @@ public class SecondFragment extends AbsBaseFragment implements VolleyResult {
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("url",htBean.getData().getItems().get(position).getUrl());
+        goTo(context, WebJumpActivity.class,bundle);
+    }
 }
 
 

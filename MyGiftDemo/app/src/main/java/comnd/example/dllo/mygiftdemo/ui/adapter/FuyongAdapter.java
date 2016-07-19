@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import comnd.example.dllo.mygiftdemo.R;
 import comnd.example.dllo.mygiftdemo.model.bean.FuyongBean;
+import comnd.example.dllo.mygiftdemo.model.bean.HTBean;
 import comnd.example.dllo.mygiftdemo.model.net.SingleLoadingImageView;
 import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -26,26 +27,26 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class FuyongAdapter extends BaseAdapter{
 
-    private ArrayList<FuyongBean> beans;
+    private HTBean beans;
     private Context context;
 
     public FuyongAdapter(Context context) {
         this.context = context;
     }
 
-    public void setBeans(ArrayList<FuyongBean> beans) {
+    public void setBeans(HTBean beans) {
         this.beans = beans;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return beans!=null?beans.size():0;
+        return beans!=null?beans.getData().getItems().size():0;
     }
 
     @Override
     public Object getItem(int position) {
-        return beans.get(position);
+        return beans.getData().getItems().get(position);
     }
 
     @Override
@@ -65,21 +66,21 @@ public class FuyongAdapter extends BaseAdapter{
         else {
             holder = (MyViewHolder) convertView.getTag();
         }
-        FuyongBean fuyongBean = beans.get(position);
 
-        holder.TopTvOne.setText(fuyongBean.getCategory());
-        holder.listviewTitle.setText(fuyongBean.getListviewTitle());
+
+        holder.TopTvOne.setText(beans.getData().getItems().get(position).getColumn().getCategory());
+        holder.listviewTitle.setText(beans.getData().getItems().get(position).getColumn().getTitle());
 
 //        Picasso.with(context).load(beans.get
 //                (position).getTouxiang()).into(holder.touXiangImg);
-        SingleLoadingImageView.loadImageView(beans.get(position).getTouxiang(),holder.touXiangImg,context);
+        SingleLoadingImageView.loadImageView(beans.getData().getItems().get(position).getAuthor().getAvatar_url(),holder.touXiangImg,context);
 //        VolleyInstance.loadImageView(beans.get(position).getTouxiang(),holder.touXiangImg,context);
-        holder.authorname.setText(fuyongBean.getNickname());
+        holder.authorname.setText(beans.getData().getItems().get(position).getAuthor().getNickname());
        // Picasso.with(context).load(beans.get(position).getCoverImage()).into(holder.contentImageView);
 //        VolleyInstance.loadImageView(beans.get(position).getCoverImage(),holder.contentImageView,context);
-        SingleLoadingImageView.loadImageView(beans.get(position).getCoverImage(),holder.contentImageView,context);
-        holder.contentTv.setText(fuyongBean.getContentTitle());
-        holder.likesCount.setText(fuyongBean.getLikeCount());
+        SingleLoadingImageView.loadImageView(beans.getData().getItems().get(position).getCover_image_url(),holder.contentImageView,context);
+        holder.contentTv.setText(beans.getData().getItems().get(position).getTitle());
+        holder.likesCount.setText(String.valueOf(beans.getData().getItems().get(position).getLikes_count()));
         return convertView;
     }
 

@@ -1,33 +1,28 @@
 package comnd.example.dllo.mygiftdemo.ui.fragment;
 
-import android.util.Log;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import comnd.example.dllo.mygiftdemo.R;
 import comnd.example.dllo.mygiftdemo.model.bean.HotBean;
-import comnd.example.dllo.mygiftdemo.model.bean.LocalhotBean;
 import comnd.example.dllo.mygiftdemo.model.net.MyStrURL;
 import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
 import comnd.example.dllo.mygiftdemo.model.net.VolleyResult;
+import comnd.example.dllo.mygiftdemo.ui.activity.JumpBabyDetailsActivity;
 import comnd.example.dllo.mygiftdemo.ui.adapter.HotGridAdapter;
 
 /**
  * Created by dllo on 16/7/11.
  * 热门的 fragment
  */
-public class HotFragment extends AbsBaseFragment implements VolleyResult {
+public class HotFragment extends AbsBaseFragment implements VolleyResult, AdapterView.OnItemClickListener{
 
     private GridView hotgridview;
     String url = MyStrURL.HOT_FM_GV_URL;
-    private ArrayList<LocalhotBean> beans;
+    private HotBean bean;
 
 
     @Override
@@ -45,8 +40,16 @@ public class HotFragment extends AbsBaseFragment implements VolleyResult {
 
     @Override
     protected void initDatas() {
-
+        hotgridview.setOnItemClickListener(this);
         VolleyInstance.getInstance(context).startRequest(url, this);
+
+        hotgridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(context, "网络解析错误", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
     }
 
@@ -54,23 +57,9 @@ public class HotFragment extends AbsBaseFragment implements VolleyResult {
     public void success(String str) {
         // 网络解析
         Gson gson = new Gson();
-        HotBean bean = gson.fromJson(str, HotBean.class);
-
-        List<HotBean.DataBean.ItemsBean> data = bean.getData().getItems();
-        beans = new ArrayList<>();
-        for (int i = 0; i < data.size(); i++) {
-
-            String imageCount = data.get(i).getData().getCover_image_url();
-            String name = data.get(i).getData().getName();
-            String price = data.get(i).getData().getPrice();
-            String likeCount = String.valueOf(data.get(i).getData().getFavorites_count());
-
-            beans.add(new LocalhotBean(name, likeCount, imageCount, price));
-
-        }
+        bean = gson.fromJson(str, HotBean.class);
         HotGridAdapter adapter = new HotGridAdapter(context);
-        adapter.setBeans(beans);
-
+        adapter.setBeans(bean);
         hotgridview.setAdapter(adapter);
     }
 
@@ -78,4 +67,14 @@ public class HotFragment extends AbsBaseFragment implements VolleyResult {
     public void failure() {
         Toast.makeText(context, "网络解析错误", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(context, "是打发斯蒂芬是打发放撒艾弗森", Toast.LENGTH_SHORT).show();
+        Bundle bundle = new Bundle();
+        bundle.putString("url",bean.getData().getItems().get(position).getData().getUrl());
+        goTo(context, JumpBabyDetailsActivity.class,bundle);
+
+    }
+
 }
