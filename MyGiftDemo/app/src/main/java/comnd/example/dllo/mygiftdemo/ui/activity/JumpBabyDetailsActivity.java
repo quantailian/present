@@ -3,19 +3,24 @@ package comnd.example.dllo.mygiftdemo.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
 import comnd.example.dllo.mygiftdemo.R;
 
 /**
  * Created by dllo on 16/7/19.
+ * 热门页面的二级页面
  */
-public class JumpBabyDetailsActivity extends AbsBaseActivity {
+public class JumpBabyDetailsActivity extends AbsBaseActivity implements View.OnClickListener {
 
     private WebView webView;
     private String urls;
+    private ImageView imageView;
+
 
     @Override
     protected int setLayout() {
@@ -24,16 +29,18 @@ public class JumpBabyDetailsActivity extends AbsBaseActivity {
 
     @Override
     protected void initViews() {
-        webView = byView(R.id.my_boby_details);
+        webView = byView(R.id.babyDatails_webView);
+        imageView = byView(R.id.babyDatails_back);
 
     }
 
     @Override
     protected void initDatas() {
+        // 接收值
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         this.urls = bundle.getString("url");
-
+        imageView.setOnClickListener(this);
         showWeb();
     }
 
@@ -88,4 +95,12 @@ public class JumpBabyDetailsActivity extends AbsBaseActivity {
         return false;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.babyDatails_back:
+                finish();
+                break;
+        }
+    }
 }

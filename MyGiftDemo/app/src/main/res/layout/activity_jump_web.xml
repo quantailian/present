@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
+<!-- 复用的布局.轮播图的二级界面,首页其他的二级界面,和这个是攻略 - 品类,风格,对象 点进去的三级界面的-->
 
    <WebView
        android:id="@+id/my_webjump_webview"

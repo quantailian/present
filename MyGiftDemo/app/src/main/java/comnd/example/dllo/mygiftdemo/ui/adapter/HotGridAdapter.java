@@ -7,15 +7,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 
 import comnd.example.dllo.mygiftdemo.R;
 import comnd.example.dllo.mygiftdemo.model.bean.HotBean;
-import comnd.example.dllo.mygiftdemo.model.bean.LocalhotBean;
+
 import comnd.example.dllo.mygiftdemo.model.net.SingleLoadingImageView;
-import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
+
 
 /**
  * Created by dllo on 16/7/14.
@@ -64,7 +62,6 @@ public class HotGridAdapter extends BaseAdapter{
         }
 
 
-//        VolleyInstance.loadImageView(data.getImageUrl(),holder.imageContent,context);
         SingleLoadingImageView.loadImageView(beans.getData().getItems().get(position).getData().getCover_image_url(),holder.imageContent,context);
         holder.tvContent.setText(beans.getData().getItems().get(position).getData().getName());
         holder.tvPrice.setText(beans.getData().getItems().get(position).getData().getPrice());

@@ -21,7 +21,7 @@ import comnd.example.dllo.mygiftdemo.model.net.SingleLoadingImageView;
  */
 public class SortPlFgDxAdapter extends BaseAdapter {
 
-    private List<PlFgDxBean.DataBean.ChannelGroupsBean.ChannelsBean> beans;
+    private PlFgDxBean.DataBean.ChannelGroupsBean beans;
     private Context context;
 
 
@@ -29,9 +29,8 @@ public class SortPlFgDxAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setBeans(List<PlFgDxBean.DataBean.ChannelGroupsBean.ChannelsBean> beans) {
+    public void setBeans(PlFgDxBean.DataBean.ChannelGroupsBean beans) {
         this.beans = beans;
-
         notifyDataSetChanged();
     }
 
@@ -43,7 +42,7 @@ public class SortPlFgDxAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return beans.get(position);
+        return beans.getChannels().get(position);
     }
 
     @Override
@@ -64,7 +63,8 @@ public class SortPlFgDxAdapter extends BaseAdapter {
             holder = (SortPlHolder) convertView.getTag();
         }
 
-        SingleLoadingImageView.loadImageView(beans.get(position).getCover_image_url(),holder.imageView,context);
+        SingleLoadingImageView.loadImageView(
+                beans.getChannels().get(position).getCover_image_url(),holder.imageView,context);
         return convertView;
     }
 

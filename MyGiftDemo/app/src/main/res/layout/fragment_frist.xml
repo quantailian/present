@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <!--指南页第一个fragment-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,7 +21,64 @@
     android:id="@+id/my_frist_recycleview"
     android:layout_width="match_parent"
     android:layout_height="100dp"></android.support.v7.widget.RecyclerView>
+<View
+    android:layout_marginTop="10dp"
+    android:background="#cecece"
+    android:layout_width="match_parent"
+    android:layout_height="8dp"/>
 
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+        <View
+            android:layout_alignLeft="@+id/tv"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="100dp"
+            android:background="@android:color/darker_gray"
+            android:layout_width="30dp"
+            android:layout_height="1dp"/>
+    <TextView
+        android:id="@+id/tv"
+       android:text="7月20日 周三"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textSize="14sp"
+
+        android:drawablePadding="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+        <View
+            android:layout_alignRight="@+id/tv"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="100dp"
+            android:background="@android:color/darker_gray"
+            android:layout_width="30dp"
+            android:layout_height="1dp"/>
+    </RelativeLayout>
+
+
+    <TextView
+        android:text="下次更新 8:00"
+        android:textSize="12dp"
+        android:gravity="center"
+        android:textColor="@android:color/holo_red_light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+    <View
+        android:background="#cecece"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
     <!--自定义listview-->
 <comnd.example.dllo.mygiftdemo.tools.MyCustomListView
     android:id="@+id/my_frist_listview"

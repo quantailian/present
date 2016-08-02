@@ -12,14 +12,11 @@ import android.widget.ImageView;
 
 
 import comnd.example.dllo.mygiftdemo.R;
-import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
-import comnd.example.dllo.mygiftdemo.model.net.VolleyResult;
-import comnd.example.dllo.mygiftdemo.ui.fragment.FristFragment;
-import comnd.example.dllo.mygiftdemo.ui.fragment.GuideFragment;
+
 
 /**
  * Created by dllo on 16/7/19.
- * 指南二级和指南复用页的二级
+ * 指南二级和指南复用页的二级,这个是攻略 - 品类,风格,对象 点进去的三级界面的activity
  * 网址的 Activity  里面有一个webview的打开网址的控件
  */
 public class WebJumpActivity extends AbsBaseActivity implements View.OnClickListener {

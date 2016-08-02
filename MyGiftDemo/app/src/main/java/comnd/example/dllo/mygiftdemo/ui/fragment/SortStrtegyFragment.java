@@ -1,9 +1,12 @@
 package comnd.example.dllo.mygiftdemo.ui.fragment;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -18,6 +21,9 @@ import comnd.example.dllo.mygiftdemo.model.bean.PlFgDxBean;
 import comnd.example.dllo.mygiftdemo.model.net.MyStrURL;
 import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
 import comnd.example.dllo.mygiftdemo.model.net.VolleyResult;
+import comnd.example.dllo.mygiftdemo.ui.activity.SortStregyOneJumpActivity;
+import comnd.example.dllo.mygiftdemo.ui.activity.SortStregySecondJumpActivity;
+import comnd.example.dllo.mygiftdemo.ui.adapter.MySortRvOnClickListener;
 import comnd.example.dllo.mygiftdemo.ui.adapter.SortPlFgDxAdapter;
 import comnd.example.dllo.mygiftdemo.ui.adapter.SortRvAdapter;
 
@@ -27,17 +33,30 @@ import comnd.example.dllo.mygiftdemo.ui.adapter.SortRvAdapter;
  * 攻略界面上面是一个RV.下面是三个Gridview
  * 三个Gridview 共用一个布局和 适配器.
  */
-public class SortStrtegyFragment extends AbsBaseFragment implements VolleyResult {
+public class SortStrtegyFragment extends AbsBaseFragment implements VolleyResult, MySortRvOnClickListener, AdapterView.OnItemClickListener {
 
     private RecyclerView recyclerView;
+    // 栏目的URL
     private String LanMuURL = MyStrURL.SORT_LANMU_URL;
     private SortRvAdapter rvAdapter;
+    // 根据type来定义解析顺序
     private int type;
     private GridView gvPL;
     private GridView gvStyle;
     private GridView gvDX;
+    // 下面三个复用的gridview的URL
     private String myUrl = MyStrURL.SORT_PLFGDX_URL;
     private SortPlFgDxAdapter myadapter;
+
+
+    private PlFgDxBean bean;
+    // 总的数据类
+    private PlFgDxBean.DataBean.ChannelGroupsBean data;
+    // 三个不同数据类
+    private PlFgDxBean.DataBean.ChannelGroupsBean classplbean;
+    private PlFgDxBean.DataBean.ChannelGroupsBean classfgbean;
+    private PlFgDxBean.DataBean.ChannelGroupsBean classdxbean;
+    private LanMuBean lanMuBean;
 
 
     @Override
@@ -47,6 +66,7 @@ public class SortStrtegyFragment extends AbsBaseFragment implements VolleyResult
 
     @Override
     protected void initView() {
+
         recyclerView = byView(R.id.my_sort_strtegy_rv);
         // 三个gridview
         gvPL = byView(R.id.my_sort_strtegy_gvpinlei);
@@ -60,6 +80,9 @@ public class SortStrtegyFragment extends AbsBaseFragment implements VolleyResult
     protected void initDatas() {
 
         VolleyInstance.getInstance(context).startRequest(LanMuURL, this);
+        gvPL.setOnItemClickListener(this);
+        gvStyle.setOnItemClickListener(this);
+        gvDX.setOnItemClickListener(this);
 
 
     }
@@ -70,79 +93,55 @@ public class SortStrtegyFragment extends AbsBaseFragment implements VolleyResult
         switch (type) {
             case 0:
                 // 解析
-                // 初始化存放我是数据类的数组
-                List<LanMuBean.DataBean.ColumnsBean> datas = new ArrayList<>();
                 // 初始化我的数据类
-                LanMuBean lanMuBean = gson.fromJson(str, LanMuBean.class);
-                // 根据我数据类中的内容多少来循环
-                for (int i = 0; i < lanMuBean.getData().getColumns().size(); i++) {
-                    // 从我数据类中得到内容组
-                    LanMuBean.DataBean.ColumnsBean columnsBean = lanMuBean.getData().getColumns().get(i);
-                    // 将内容add进
-                    datas.add(columnsBean);
-                }
+                lanMuBean = gson.fromJson(str, LanMuBean.class);
+                // 适配器
                 rvAdapter = new SortRvAdapter(context);
-
-                rvAdapter.setBeans(datas);
+                rvAdapter.setBean(lanMuBean);
                 recyclerView.setAdapter(rvAdapter);
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
                 gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                 recyclerView.setLayoutManager(gridLayoutManager);
-
+                rvAdapter.setMySortRvOnClickListener(this);
                 type = 1;
                 VolleyInstance.getInstance(context).startRequest(myUrl, this);
 
                 break;
 
             case 1:
-                // 初始化存储存储数据类的数组,用的是一个数据类,所以只有名字不一样
-                List<PlFgDxBean.DataBean.ChannelGroupsBean.ChannelsBean> pbean = new ArrayList<>();
-                List<PlFgDxBean.DataBean.ChannelGroupsBean.ChannelsBean> fbean = new ArrayList<>();
-                List<PlFgDxBean.DataBean.ChannelGroupsBean.ChannelsBean> dbean = new ArrayList<>();
+
                 // 通过gson初始化我的数据类
-                PlFgDxBean bean = gson.fromJson(str, PlFgDxBean.class);
+                bean = gson.fromJson(str, PlFgDxBean.class);
+
                 // 循环判断第一层object的大小,得到第一层object里面的内容
                 for (int i = 0; i < bean.getData().getChannel_groups().size(); i++) {
 
-                    PlFgDxBean.DataBean.ChannelGroupsBean data = bean.getData().getChannel_groups().get(i);
-
+                    data = bean.getData().getChannel_groups().get(i);
 
                     // 通过switch-case 分别加入不同的gridview里
+                    // 里面每一个case都建了个数据类,让它的值等于我们的data.然后将不同的数据类里的值进行网址拼接.
                     switch (i) {
                         case 0:
-                            for (int i1 = 0; i1 < data.getChannels().size(); i1++) {
-                                // 加到第一个 集合中
-                                pbean.add(data.getChannels().get(i1));
-                            }
+
+                            classplbean = data;
                             myadapter = new SortPlFgDxAdapter(context);
-                            myadapter.setBeans(pbean);
+                            myadapter.setBeans(data);
                             gvPL.setAdapter(myadapter);
 
                             break;
                         case 1:
 
-
-                            for (int i1 = 0; i1 < data.getChannels().size(); i1++) {
-
-                                fbean.add(data.getChannels().get(i1));
-
-
-                            }
-
+                            classfgbean = data;
                             myadapter = new SortPlFgDxAdapter(context);
-                            myadapter.setBeans(fbean);
+                            myadapter.setBeans(data);
                             gvStyle.setAdapter(myadapter);
 
 
                             break;
                         case 2:
-
-                            for (int i1 = 0; i1 < data.getChannels().size(); i1++) {
-                                dbean.add(data.getChannels().get(i1));
-
-                            }
+                            classdxbean = data;
                             myadapter = new SortPlFgDxAdapter(context);
-                            myadapter.setBeans(dbean);
+                            myadapter.setBeans(data);
                             gvDX.setAdapter(myadapter);
 
 
@@ -161,5 +160,65 @@ public class SortStrtegyFragment extends AbsBaseFragment implements VolleyResult
     public void failure() {
         Toast.makeText(context, "网络解析失败", Toast.LENGTH_SHORT).show();
 
+    }
+
+
+    //rv的点击事件
+    @Override
+    public void sortRvOnClickListener(int pos) {
+        // 传值
+        Bundle bundle = new Bundle();
+        bundle.putString("url", "http://api.liwushuo.com/v2/columns/"
+                + lanMuBean.getData().getColumns().get(pos).getId() + "?limit=20&offset=0");
+        bundle.putString("image",lanMuBean.getData().getColumns().get(pos).getBanner_image_url());
+        bundle.putString("content",lanMuBean.getData().getColumns().get(pos).getDescription());
+        bundle.putString("title",lanMuBean.getData().getColumns().get(pos).getTitle());
+        goTo(context, SortStregyOneJumpActivity.class,bundle);
+
+    }
+
+
+    // parent是listview或者gridview中装的一切控件.只有选择他得到ID,才能为我的listview设置行监听.
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Bundle bundle = new Bundle();
+        switch (parent.getId()) {
+
+            case R.id.my_sort_strtegy_gvpinlei:
+                // 拼接网址 传过去.
+
+                bundle.putString("url",
+                        "http://api.liwushuo.com/v2/channels/"
+                                + classplbean.getChannels().get(position).getId() + "/items?limit=20&offset=0");
+                bundle.putString("title", classplbean.getChannels().get(position).getName());
+                goTo(context, SortStregySecondJumpActivity.class, bundle);
+
+                Toast.makeText(context, "我是GV的行监听", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.my_sort_strtegy_gvstyle:
+                // 拼接网址 传过去.
+
+                bundle.putString("url",
+                        "http://api.liwushuo.com/v2/channels/"
+                                + classfgbean.getChannels().get(position).getId() + "/items?limit=20&offset=0");
+                bundle.putString("title", classfgbean.getChannels().get(position).getName());
+                goTo(context, SortStregySecondJumpActivity.class, bundle);
+
+                break;
+
+            case R.id.my_sort_strtegy_gvduixiang:
+                // 拼接网址 传过去.
+
+                bundle.putString("url",
+                        "http://api.liwushuo.com/v2/channels/"
+                                + classdxbean.getChannels().get(position).getId() + "/items?limit=20&offset=0");
+                bundle.putString("title", classdxbean.getChannels().get(position).getName());
+                goTo(context, SortStregySecondJumpActivity.class, bundle);
+
+                break;
+
+
+        }
     }
 }

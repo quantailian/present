@@ -1,8 +1,5 @@
 package comnd.example.dllo.mygiftdemo.ui.activity;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;

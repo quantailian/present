@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--translate 画面转换位置移动动画效果-->
+    <!--fromXDelta 属性动画起始的时候 .X坐标上的位置 ,toXDelta结束的时候.X坐标上的位置-->
+    <translate
+        android:fromXDelta="0"
+        android:toXDelta="0"
+        android:fromYDelta="100%p"
+        android:toYDelta="20%p"
+        android:duration="1000" />
+</set>

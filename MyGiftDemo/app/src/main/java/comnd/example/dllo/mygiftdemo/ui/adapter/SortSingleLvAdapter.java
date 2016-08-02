@@ -20,26 +20,26 @@ import comnd.example.dllo.mygiftdemo.model.net.SingleLoadingImageView;
  */
 public class SortSingleLvAdapter extends BaseAdapter {
 
-    private List<SingleBean.DataBean.CategoriesBean> data;
+    private SingleBean data;
     private Context context;
 
     public SortSingleLvAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<SingleBean.DataBean.CategoriesBean> data) {
+    public void setData(SingleBean data) {
         this.data = data;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return data!=null?data.size():0;
+        return data!=null?data.getData().getCategories().size():0;
     }
 
     @Override
     public Object getItem(int position) {
-        return data.get(position);
+        return data.getData().getCategories().get(position);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SortSingleLvAdapter extends BaseAdapter {
         else {
             holder = (SingleHolder) convertView.getTag();
         }
-        holder.tv_name.setText(data.get(position).getName());
+        holder.tv_name.setText(data.getData().getCategories().get(position).getName());
         return convertView;
     }
 

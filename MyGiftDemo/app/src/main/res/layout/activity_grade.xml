@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/signin_bg_night">
+    <RatingBar
+        android:id="@+id/grade_rB"
+        android:numStars="5"
+        android:stepSize="0.5"
+        android:indeterminate="false"
+        android:layout_marginTop="200dp"
+        android:rating="0.0"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:id="@+id/grade_Tv"
+        android:text="亲,来给我们评个分吧"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/grade_Btn"
+        android:text="确定"
+        android:layout_gravity="center"
+
+        android:background="@drawable/stort"
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

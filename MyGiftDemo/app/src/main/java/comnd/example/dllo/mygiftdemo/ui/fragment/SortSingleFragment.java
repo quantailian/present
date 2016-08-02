@@ -1,24 +1,24 @@
 package comnd.example.dllo.mygiftdemo.ui.fragment;
 
+
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.GridView;
+
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import comnd.example.dllo.mygiftdemo.R;
 import comnd.example.dllo.mygiftdemo.model.bean.SingleBean;
 import comnd.example.dllo.mygiftdemo.model.net.MyStrURL;
 import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
 import comnd.example.dllo.mygiftdemo.model.net.VolleyResult;
-import comnd.example.dllo.mygiftdemo.ui.adapter.SortSingleGvAdapter;
 import comnd.example.dllo.mygiftdemo.ui.adapter.SortSingleLvAdapter;
 import comnd.example.dllo.mygiftdemo.ui.adapter.SortSingleRightAdapter;
 
@@ -31,15 +31,18 @@ import comnd.example.dllo.mygiftdemo.ui.adapter.SortSingleRightAdapter;
  * 右面的listview里面套了一个gridview/
  * gridview 的解析是在右面listview的适配器中进行的.
  */
-public class SortSingleFragment extends AbsBaseFragment implements VolleyResult, View.OnTouchListener, AdapterView.OnItemClickListener {
+public class SortSingleFragment extends AbsBaseFragment implements VolleyResult {
 
     private ListView leftLv;
     private ListView reightLv;
     private String singleUrl = MyStrURL.SORL_DANPIN_URL;
 
-    private View clickSource,touchSource;
-    private int offset =0;
     private SortSingleRightAdapter rightAdapter;
+    private SingleBean bean;
+    // 是否滑动
+    private boolean isScrool = true;
+
+    private SortSingleLvAdapter adapter;
 
 
     @Override
@@ -58,35 +61,31 @@ public class SortSingleFragment extends AbsBaseFragment implements VolleyResult,
     @Override
     protected void initDatas() {
 
-        VolleyInstance.getInstance(context).startRequest(singleUrl,this);
+        VolleyInstance.getInstance(context).startRequest(singleUrl, this);
+        // 联动
+        Linkage();
+
     }
+
 
     @Override
     public void success(String str) {
         Gson gson = new Gson();
 
-        SingleBean bean = gson.fromJson(str, SingleBean.class);
-        List<SingleBean.DataBean.CategoriesBean> data = new ArrayList<>();
-        for (int i = 0; i < bean.getData().getCategories().size(); i++) {
+        bean = gson.fromJson(str, SingleBean.class);
 
-            data.add(bean.getData().getCategories().get(i));
-        }
-        SortSingleLvAdapter adapter = new SortSingleLvAdapter(context);
-        adapter.setData(data);
+        adapter = new SortSingleLvAdapter(context);
+        adapter.setData(bean);
         leftLv.setAdapter(adapter);
 
         // 这个是第二个listview初始化适配器
+
         rightAdapter = new SortSingleRightAdapter(context);
-        rightAdapter.setBeans(data);
+        rightAdapter.setBeans(bean);
         reightLv.setAdapter(rightAdapter);
-        // 给右面的listview 设置滑动点击事件
-        reightLv.setOnTouchListener(this);
-        leftLv.setOnItemClickListener(this);
+
+
     }
-
-
-
-
 
 
     @Override
@@ -95,40 +94,67 @@ public class SortSingleFragment extends AbsBaseFragment implements VolleyResult,
     }
 
 
-    /**
-     * listview 滑动事件 右侧listview 滑动 左侧listview 根据位置跳到相应位置.
-     * @param v
-     * @param event
-     * @return
-     */
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if (touchSource == null){
-            touchSource = v;
-        }
-        if (v == touchSource){
-            leftLv.dispatchTouchEvent(event);
-            if (event.getAction() == MotionEvent.ACTION_UP){
-                clickSource = v;
-                touchSource = null;
+
+
+    // 两个listview联动
+    private void Linkage(){
+        // 左面listview 的点击事件
+        leftLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // 点击左面的listview的时候. 不滑动
+                isScrool = false;
+                for (int i = 0; i < leftLv.getChildCount(); i++) {
+                    if (i == position){
+                        leftLv.getChildAt(i).setBackgroundColor(Color.WHITE);
+
+
+                    }
+
+                    else {
+                        leftLv.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
+                    }
+                }
+                // 当点击左面的listview后,右面的listview得到位置
+                reightLv.setSelection(position);
+                // 滑动的位置
+                reightLv.smoothScrollToPosition(position);
+
             }
-        }
-        return false;
+        });
+
+        // 右侧listview的滑动事件
+        reightLv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                if (isScrool){
+                    for (int i = 0; i < leftLv.getChildCount(); i++) {
+                        if (i == firstVisibleItem){
+                            leftLv.getChildAt(i).setBackgroundColor(Color.RED);
+
+
+                        }
+                        else {
+                            leftLv.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
+
+                        }
+                    }
+
+
+                }
+                else {
+                    isScrool = true;
+                }
+            }
+        });
+
+
     }
 
-    /**
-     * listview 的点击事件
-     * 双listview联动 点击左侧listview 右侧跳到相应位置
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
-     */
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // 右侧listview 跳到当前左侧listview的位置
-        reightLv.setSelection(position);
-        // 通知适配器刷新位置
-        rightAdapter.notifyDataSetChanged();
-    }
 }

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--攻略页面第一个栏目点进去的界面-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@android:color/holo_red_light">
+
+
+                <ImageView
+
+                    android:id="@+id/one_sortstregy_img_back"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="24dp"
+                    android:background="@mipmap/menu_action_back" />
+
+
+                <TextView
+                    android:id="@+id/one_sortstregy_tvtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="110dp"
+                    android:gravity="center"
+                    android:text="礼物"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+
+
+            </RelativeLayout>
+<!--android:scaleType="fitXY" 让它充满.-->
+            <ImageView
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_launcher"
+                android:id="@+id/one_sortstregy_img"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="130dp">
+                <TextView
+                    android:text="简介"
+                    android:textSize="10sp"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/one_sortstregy_content"
+                    android:layout_margin="10dp"
+
+                    android:text="我是一个点击收起就可以回去的文本框.不信你点击我下面的收起按钮试一下你就知道了.我是一个点击收起就可以回去的文本框.不信你点击我下面的收起按钮试一下你就知道了
+                    我是一个点击收起就可以回去的文本框.不信你点击我下面的收起按钮试一下你就知道了"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+                <TextView
+                    android:layout_marginLeft="280dp"
+                    android:text="查看全部"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <TextView
+                    android:text="列表"
+                    android:textSize="10sp"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <comnd.example.dllo.mygiftdemo.tools.MyCustomListView
+                    android:id="@+id/one_sortstregy_activity_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

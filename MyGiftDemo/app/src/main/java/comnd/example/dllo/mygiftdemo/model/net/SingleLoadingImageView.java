@@ -11,7 +11,7 @@ import comnd.example.dllo.mygiftdemo.R;
 
 /**
  * Created by dllo on 16/7/15.
- * 自己写的单例
+ * 自己写的单例 解析图片
  */
 public class SingleLoadingImageView {
 

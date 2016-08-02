@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="------  智能家居  ------"
-            android:textSize="17sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <comnd.example.dllo.mygiftdemo.tools.MyCustomGridView

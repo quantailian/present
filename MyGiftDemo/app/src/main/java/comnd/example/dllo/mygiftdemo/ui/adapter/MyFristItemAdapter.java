@@ -8,16 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
 
-
-import java.util.List;
 
 import comnd.example.dllo.mygiftdemo.R;
 import comnd.example.dllo.mygiftdemo.model.bean.MyFristItemBean;
 import comnd.example.dllo.mygiftdemo.model.net.SingleLoadingImageView;
-import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
-import comnd.example.dllo.mygiftdemo.ui.fragment.FristFragment;
+
 
 
 /**

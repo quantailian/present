@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants">
 <!-- 第二个fragment复用-->
+    <!--自定义带下拉刷新的lv-->
 
-    <ListView
+    <comnd.example.dllo.mygiftdemo.tools.CustomListView
         android:id="@+id/my_second_fragment_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
-
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

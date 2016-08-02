@@ -11,4 +11,10 @@
 
 
 </style>
+
+    <!--popwindow 设置动画效果-->
+    <style name="popwindow_anim_style">
+        <item name="android:windowEnterAnimation">@anim/popwindowappear</item>
+        <item name="android:windowExitAnimation">@anim/popwindowdisapper</item>
+    </style>
 </resources>

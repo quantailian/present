@@ -1,6 +1,8 @@
 package comnd.example.dllo.mygiftdemo.ui.fragment;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -59,6 +62,7 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
 
     private MyCustomListView listView;
     private MyCustomBean customBean;
+    private CustomListViewAdapter listViewAdapter;
 
 
     @Override
@@ -71,6 +75,8 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
         rollImgBanner = byView(R.id.rollimg_banner);
         recyclerView = byView(R.id.my_frist_recycleview);
         listView = byView(R.id.my_frist_listview);
+
+
     }
 
     @Override
@@ -79,7 +85,6 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
         type = 0;
         VolleyInstance.getInstance(context).startRequest(bannerUrl, this);
         listView.setOnItemClickListener(this);
-
 
     }
 
@@ -90,6 +95,7 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
 
         // 设置小圆点
         rollImgBanner.setBannerStyle(Banner.CIRCLE_INDICATOR);
+
         // 设置位置 居中
         rollImgBanner.setIndicatorGravity(Banner.CENTER);
         // 设置轮播时间
@@ -135,6 +141,7 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
                 recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
                 itemAdapter.setData(fristItemBean);
                 recyclerView.setAdapter(itemAdapter);
+
                 itemAdapter.setMyrvOnClickListener(this);
                 type = 2;
                 VolleyInstance.getInstance(context).startRequest(listviewUrl,this);
@@ -144,11 +151,9 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
                 customBean = gson.fromJson(str,MyCustomBean.class);
 
                 //  初始化适配器
-                CustomListViewAdapter listViewAdapter = new CustomListViewAdapter(context);
+                listViewAdapter = new CustomListViewAdapter(context);
                 listViewAdapter.setBeans(customBean);
                 listView.setAdapter(listViewAdapter);
-
-
 
                 break;
         }
@@ -186,7 +191,12 @@ public class FristFragment extends AbsBaseFragment implements VolleyResult, Bann
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle bundle = new Bundle();
-        bundle.putString("url",customBean.getData().getItems().get(position).getUrl());
-        goTo(context, WebJumpActivity.class,bundle);
+        bundle.putString("url", customBean.getData().getItems().get(position).getUrl());
+        goTo(context, WebJumpActivity.class, bundle);
+
+
+
+
     }
+
 }

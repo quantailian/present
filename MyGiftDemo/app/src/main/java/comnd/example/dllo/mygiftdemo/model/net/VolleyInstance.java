@@ -20,7 +20,7 @@ import comnd.example.dllo.mygiftdemo.R;
 /**
  * Created by dllo on 16/7/12.
  * 封装Volley的单例类 --->提供volley框架的一些使用方法
- * 和imageloade 解析图片的方法
+ * 解析URL
  */
 
 public class VolleyInstance {

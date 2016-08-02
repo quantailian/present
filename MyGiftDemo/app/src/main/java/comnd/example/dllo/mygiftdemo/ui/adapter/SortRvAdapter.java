@@ -20,15 +20,21 @@ import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
  * 栏目的 适配器
  */
 public class SortRvAdapter extends RecyclerView.Adapter<SortRvAdapter.MyRvHolder> {
-    private List<LanMuBean.DataBean.ColumnsBean> beans ;
+   LanMuBean bean ;
     private Context context;
+    private MySortRvOnClickListener mySortRvOnClickListener;
 
     public SortRvAdapter(Context context) {
         this.context = context;
     }
 
-    public void setBeans(List<LanMuBean.DataBean.ColumnsBean> beans) {
-        this.beans = beans;
+    public void setBean(LanMuBean bean) {
+        this.bean = bean;
+        notifyDataSetChanged();
+    }
+
+    public void setMySortRvOnClickListener(MySortRvOnClickListener mySortRvOnClickListener) {
+        this.mySortRvOnClickListener = mySortRvOnClickListener;
     }
 
     @Override
@@ -40,20 +46,30 @@ public class SortRvAdapter extends RecyclerView.Adapter<SortRvAdapter.MyRvHolder
     }
 
     @Override
-    public void onBindViewHolder(MyRvHolder holder, int position) {
+    public void onBindViewHolder(final MyRvHolder holder, int position) {
+
+        if (mySortRvOnClickListener!=null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = holder.getAdapterPosition();
+                    mySortRvOnClickListener.sortRvOnClickListener(pos);
+                }
+            });
+        }
 
        SingleLoadingImageView.loadImageView
-               (beans.get(position).getCover_image_url(),holder.countentImage,context);
+               (bean.getData().getColumns().get(position).getCover_image_url(),holder.countentImage,context);
 
-        holder.titleTv.setText(beans.get(position).getTitle());
-        holder.subtitleTv.setText(beans.get(position).getSubtitle());
-        holder.authorTv.setText(beans.get(position).getAuthor());
+        holder.titleTv.setText(bean.getData().getColumns().get(position).getTitle());
+        holder.subtitleTv.setText(bean.getData().getColumns().get(position).getSubtitle());
+        holder.authorTv.setText(bean.getData().getColumns().get(position).getAuthor());
 
     }
 
     @Override
     public int getItemCount() {
-        return beans!=null?beans.size():0;
+        return bean!=null?bean.getData().getColumns().size():0;
     }
 
     class MyRvHolder extends RecyclerView.ViewHolder {

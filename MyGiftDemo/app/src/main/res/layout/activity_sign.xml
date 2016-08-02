@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/signin_bg_night">
+
+
+    <ImageView
+        android:id="@+id/sign_back"
+        android:background="@mipmap/menu_action_back"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:src="@mipmap/aaa"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+    <ImageView
+        android:layout_marginRight="26dp"
+        android:layout_marginTop="95dp"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/bg_top_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <CalendarView
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="26dp"
+        android:background="#fef7f0"
+        android:layout_marginTop="100dp"
+        android:showWeekNumber="true"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:id="@+id/calendarView" />
+
+
+    <FrameLayout
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="500dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+
+            android:src="@mipmap/btn_signin_sucess"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+    </FrameLayout>
+
+
+
+</FrameLayout>

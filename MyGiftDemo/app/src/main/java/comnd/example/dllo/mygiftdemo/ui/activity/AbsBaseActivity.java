@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.WindowManager;
+
+import comnd.example.dllo.mygiftdemo.ui.fragment.AbsBaseFragment;
+import comnd.example.dllo.mygiftdemo.ui.fragment.HomeFragment;
+
 
 /**
  * Created by dllo on 16/7/11.
@@ -56,6 +59,8 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
         Intent intent = new Intent(from,to);
         startActivity(intent);
     }
+
+
     /**
      * 隐式intent
      * @param action
@@ -72,4 +77,5 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
         intent.putExtras(values);
         startActivity(intent);
     }
+
 }

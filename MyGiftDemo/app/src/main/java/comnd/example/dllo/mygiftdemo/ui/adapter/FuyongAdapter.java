@@ -8,16 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 
 import comnd.example.dllo.mygiftdemo.R;
-import comnd.example.dllo.mygiftdemo.model.bean.FuyongBean;
+
 import comnd.example.dllo.mygiftdemo.model.bean.HTBean;
 import comnd.example.dllo.mygiftdemo.model.net.SingleLoadingImageView;
-import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**

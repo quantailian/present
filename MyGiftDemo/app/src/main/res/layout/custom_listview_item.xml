@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="240dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    >
 <!-- 指南页面的自定义listview布局-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +21,7 @@
             android:background="@drawable/stort"
             android:text="数码"
             android:textColor="@android:color/holo_red_light"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/my_list_tv1"
@@ -28,14 +30,14 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:text="阿离离"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
 
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="130dp"
+            android:layout_marginLeft="160dp"
             android:src="@mipmap/aaa" />
 
         <TextView
@@ -44,7 +46,7 @@
             android:layout_gravity="center_vertical"
             android:text="阿离离"
             android:layout_marginLeft="5dp"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
     </LinearLayout>
 
     <ImageView
@@ -78,7 +80,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/like_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -94,6 +96,10 @@
             android:text="212121" />
 
     </LinearLayout>
+    <View
+        android:background="#cecece"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"/>
 
 
 </LinearLayout>

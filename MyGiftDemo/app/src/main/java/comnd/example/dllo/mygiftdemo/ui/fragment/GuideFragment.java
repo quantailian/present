@@ -24,13 +24,14 @@ import comnd.example.dllo.mygiftdemo.model.bean.GuideFragmentTitleBean;
 import comnd.example.dllo.mygiftdemo.model.net.MyStrURL;
 import comnd.example.dllo.mygiftdemo.model.net.VolleyInstance;
 import comnd.example.dllo.mygiftdemo.model.net.VolleyResult;
+import comnd.example.dllo.mygiftdemo.ui.activity.SearchActivity;
 import comnd.example.dllo.mygiftdemo.ui.adapter.GuideFristAdapter;
 
 /**
  * Created by dllo on 16/7/11.
  * 指南页面的 主fragment
  */
-public class GuideFragment extends AbsBaseFragment implements VolleyResult {
+public class GuideFragment extends AbsBaseFragment implements VolleyResult, View.OnClickListener {
     //定义Volley请求队列
 //    private RequestQueue queue;
     private String url = MyStrURL.MY_TITLE;
@@ -40,6 +41,7 @@ public class GuideFragment extends AbsBaseFragment implements VolleyResult {
     private TabLayout tabLayout;
     private ArrayList<String> titleBean;
     private ImageView imageView;
+    private ImageView imageSearch;
 
 
     @Override
@@ -58,6 +60,7 @@ public class GuideFragment extends AbsBaseFragment implements VolleyResult {
         tabLayout = byView(R.id.my_guide_tablayout);
         viewpager = byView(R.id.my_guide_viewpager);
         imageView = byView(R.id.guide_title_one);
+        imageSearch = byView(R.id.guide_search);
 
     }
 
@@ -76,6 +79,7 @@ public class GuideFragment extends AbsBaseFragment implements VolleyResult {
 
         // viewpager预加载
         viewpager.setOffscreenPageLimit(16);
+        imageSearch.setOnClickListener(this);
 
         VolleyInstance.getInstance(getContext()).startRequest(url, this);
     }
@@ -117,6 +121,8 @@ public class GuideFragment extends AbsBaseFragment implements VolleyResult {
 
         adapter = new GuideFristAdapter(getChildFragmentManager());
         adapter.setTitle(titleBean, arrayList);
+
+
         viewpager.setAdapter(adapter);
         // 设置滑动的tablayout
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -133,4 +139,12 @@ public class GuideFragment extends AbsBaseFragment implements VolleyResult {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.guide_search:
+                go2(context, SearchActivity.class);
+                break;
+        }
+    }
 }
